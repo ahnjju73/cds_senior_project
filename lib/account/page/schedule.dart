@@ -239,16 +239,17 @@ class _ScheduleState extends State<Schedule> {
 
     var weekdays = getWeekdays(DateTime.now(), 0).getRange(1, 6).toList();
     return SafeArea(
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 28.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            SizedBox(
-              height: dHeight * 251 / 932,
-              child: Stack(
-                children: [
-                  ClipRRect(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          SizedBox(
+            height: dHeight * 251 / 932,
+            width: dWidth,
+            child: Stack(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 18.0),
+                  child: ClipRRect(
                     borderRadius: BorderRadius.circular(20.0),
                     child: Image.asset(
                       'assets/images/schedule_bg1.jpg',
@@ -259,74 +260,75 @@ class _ScheduleState extends State<Schedule> {
                       colorBlendMode: BlendMode.modulate,
                     ),
                   ),
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Center(
-                        child: Text(isUpdated ? 'Hi $name!' : 'updating..',
-                          maxLines: 2,
-                          overflow: TextOverflow.ellipsis,
-                          style: TextStyle(
-                            fontSize: 50,
+                ),
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Center(
+                      child: Text(isUpdated ? 'Hi $name!' : 'updating..',
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(
+                          fontSize: 50,
+                          fontFamily: 'Overlock_SC',
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+                    Center(
+                      child: Text('SCHEDULE',
+                        style: TextStyle(
+                          fontSize: 20,
+                          color: Colors.white,
                             fontFamily: 'Overlock_SC',
-                            color: Colors.white,
-                          ),
+                            fontWeight: FontWeight.bold
                         ),
                       ),
-                      Center(
-                        child: Text('SCHEDULE',
-                          style: TextStyle(
-                            fontSize: 20,
-                            color: Colors.white,
-                              fontFamily: 'Overlock_SC',
-                              fontWeight: FontWeight.bold
-                          ),
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(bottom: 8.0),
-                        child: Row(
-                          children: [
-                            ...List.generate(weekdays.length, (idx){
-                              return ElevatedButton(
-                                style: ElevatedButton.styleFrom(
-                                  backgroundColor: idx + 1 == selected_weekday ? Color.fromARGB(161, 255, 254, 163) : Color.fromARGB(0, 255, 255, 255),
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        ...List.generate(weekdays.length, (idx){
+                          return ElevatedButton(
+
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: idx + 1 == selected_weekday ? Color.fromARGB(161, 255, 254, 163) : Color.fromARGB(0, 255, 255, 255),
+                            ),
+                            onPressed: (){
+                              setState(() {
+                                selected_weekday = idx + 1;
+                              });
+                            },
+                            child: Column(
+                              children: [
+                                Text('${week[idx]}',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold,
+                                  ),
                                 ),
-                                onPressed: (){
-                                  setState(() {
-                                    selected_weekday = idx + 1;
-                                  });
-                                },
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Text('${week[idx]}',
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                    Text('${weekdays[idx].day}',
-                                      style: TextStyle(
-                                          color: Colors.white,
-                                          fontWeight: FontWeight.bold
-                                      ),
-                                    )
-                                  ],
+                                Text('${weekdays[idx].day}',
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold
+                                  ),
                                 )
-                              );
-                            }),
-                          ],
-                        ),
-                      ),
-                    ],
-                  )
-                ]
-              ),
+                              ],
+                            )
+                          );
+                        }),
+                      ],
+                    ),
+                  ],
+                )
+              ]
             ),
-            SizedBox(
-              height: 470 / 932 * dHeight,
+          ),
+          Padding(
+            padding: const EdgeInsets.only(left: 18.0, right: 18, top: 15),
+            child: SizedBox(
+              height: 550 / 932 * dHeight,
               child: Container(
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.all(Radius.circular(20)),
@@ -341,8 +343,8 @@ class _ScheduleState extends State<Schedule> {
                 ),
               ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
